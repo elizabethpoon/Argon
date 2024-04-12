@@ -37,6 +37,9 @@ class Meals:
         Args: 
         calories(int): this variable is how many calories a person wants to lose. 
         
+        Side effects: 
+        Prints a graph to the console
+        
         '''
         x = 0
         change = make_array()
