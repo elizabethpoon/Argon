@@ -6,6 +6,21 @@ import matplotlib
 import matplotlib.pyplot as plt
 plt.style.use('fivethirtyeight')
 
+class User:
+#Michael: f-strings and input() function
+
+def Get_user_info(self, name, height, weight, age, allergies, sport, daily_activity):
+    self.name = input("Name: ")
+    self.height = input("Height: ")
+    self.weight = input("Weight: ")
+    self.age = input("Age: ")
+    self.allergies = input("Allergies: ")
+    self.sport = input("Sport: ")
+    self.daily_activity = input("Daily Activities: ")
+
+print(f"This is {name}. Their height is {height}. Their weight is {weight}. Their age is {age}. The allergies that they have are {allergies}. 
+The sport they play is {sport}. Their daily activities include {daily_activity}).
+
 class Calories: 
 
 #Elizabeth: f-strings, optional parameters, sequence unpacking
