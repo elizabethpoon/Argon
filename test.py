@@ -18,16 +18,11 @@ def Get_user_info(self, name, height, weight, age, allergies, sport, daily_activ
     self.sport = input("Sport: ")
     self.daily_activity = input("Daily Activities: ")
 
-print(f"This is {name}. Their height is {height}. Their weight is {weight}. Their age is {age}. The allergies that they have are {allergies}. 
-The sport they play is {sport}. Their daily activities include {daily_activity}).
+print(f"This is {name}. Their height is {height}. Their weight is {weight}. Their age is {age}. The allergies that they have are {allergies}. The sport they play is {sport}. Their daily activities include {daily_activity}. )
 
 class Calories: 
     """
-    This class allows users to obtain personalized calorie plans based on 
-    their input and the guidelines provided in the text file. The calculation
-    considers factors such as user's height, weight, sport intensity, and daily
-    activity level to provide tailored calorie plans for maintenance, shredding,
-    and bulking.
+    This class allows users to obtain personalized calorie plans based on their input and the guidelines provided in the text file. The calculation considers factors such as user's height, weight, sport intensity, and daily activity level to provide tailored calorie plans for maintenance, shredding, and bulking.
     """
     def __init__(self, guidelines_file, height, weight, sport, daily_activity):
         self.guidelines_file = guidelines_file
