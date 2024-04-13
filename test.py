@@ -1,3 +1,4 @@
+import random
 import numpy as np
 from datascience import *
 import matplotlib
@@ -29,7 +30,61 @@ def display_nutrition_calories(calories, goal, detailed=True):
         print(caloric_intake_info)
 
 class Meals: 
-    
+#Colby: optional parameters and/or keyword arguments, Conditional Expressions,
+#F-strings Containing Expressions, Comprehensions or Generator Expressions,
+#Use of a Key Function with Sorting/Min/Max Functions
+
+#possible use of JSON once file implementation is complete
+
+#To get meal data it will be given in a different method
+#that will be able to read from a file of different meals
+#with open(file_path, mode = "r", encoding = "utf-8") as file:
+    def Give_meal_options(self, user_allergies=None, user_preferences=None):
+        """
+        Provides meal options based on user's allergies and preferences
+
+        Args:
+            user_allergies (list, optional): A list of user's allergies.
+            Defaults to None
+            user_preferences (list, optional): A list of user's meal preferences.
+            Defaults to None
+
+        Returns:
+            list or None: A list of tuples containing meal options (meal name and ingredients),
+            or None if no suitable meal options are found
+        """
+#Prompt user to input allergies and preferences
+        if user_allergies is None:
+            user_allergies = input("Enter your allergies (separate by comma):").split(", ")
+        if user_preferences is None:
+            user_preferences = input("Enter your meal preferences (separate by comma):").split(", ")
+
+        possible_meals = []
+        for meal, ingredients in self.meals_data.items():
+            suitable = True
+            if self.user_preferences:
+                preferences_present = all(preference in ingredients for preference in self.user_preferences)
+                suitable = preferences_present == False
+            else:
+                allergies_present = all(allergy in ingredients for allergy in self.user_allergies)
+                suitable = allergies_present == False
+            if suitable:
+                possible_meals.append((meal, ingredients))
+
+        if len(possible_meals) == 0:
+            return None
+
+        num_meals_to_select = min(3, len(possible_meals))
+        meal_options = random.sample(possible_meals, num_meals_to_select)
+
+        print("Here are your 3 meal options:")
+        sorted_meal_options = sorted(meal_options, key=lambda x: x[0])
+        for meal_index in range(len(sorted_meal_options)):
+            meal, ingredients = sorted_meal_options[meal_index]
+        print(f"{meal}: {', '.join(ingredients)}")
+        return meal_options
+#no file path has been created yet
+
     def graph(calories):
         '''
         This method seeks to determine how many pounds a person needs to lose per week to get to their desired weight. 
