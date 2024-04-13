@@ -22,27 +22,94 @@ print(f"This is {name}. Their height is {height}. Their weight is {weight}. Thei
 The sport they play is {sport}. Their daily activities include {daily_activity}).
 
 class Calories: 
+    """
+    This class allows users to obtain personalized calorie plans based on 
+    their input and the guidelines provided in the text file. The calculation
+    considers factors such as user's height, weight, sport intensity, and daily
+    activity level to provide tailored calorie plans for maintenance, shredding,
+    and bulking.
+    """
+    def __init__(self, guidelines_file, height, weight, sport, daily_activity):
+        self.guidelines_file = guidelines_file
+        self.height = height
+        self.weight = weight
+        self.sport = sport
+        self.daily_activity = daily_activity
 
+    def _read_guidelines(self, goal):
+        with open(self.guidelines_file, 'r', encoding = 'utf-8') as file:
+            for line in file:
+                if line.startswith(goal):
+                    return next(file).strip()
+
+    def calculate_maintenance_calories(self):
+        guidelines = self._read_guidelines("maintenance")
+        return self.calculate_custom_calories(guidelines)
+
+    def calculate_shred_calories(self):
+        guidelines = self._read_guidelines("shred")
+        return self.calculate_custom_calories(guidelines)
+
+    def calculate_bulk_calories(self):
+        guidelines = self._read_guidelines("bulk")
+        return self.calculate_custom_calories(guidelines)
+
+    def calculate_custom_calories(self, guidelines):
+        # Parse guidelines from the file
+        guideline_values = [float(val) for val in guidelines.split(',')]
+        height_meters = self.height
+        weight_kg = self.weight
+        activity_level = self.daily_activity
+        maintenance_calories = (10 * weight_kg) + (6.25 * height_meters * 100)
+        - (5 * 25) + 5
+        shred_calories = maintenance_calories - 500  
+        bulk_calories = maintenance_calories + 500 
+        
+        if  self.sport.lower() == "high-intensity":
+            maintenance_calories *= 1.3
+            shred_calories *= 1.3
+            bulk_calories *= 1.3    
+        elif self.sport.lower() == "moderate-intensity":
+            maintenance_calories *= 1.1
+            shred_calories *= 1.1
+            bulk_calories *= 1.1
+        if activity_level.lower() == "lightly active":
+            maintenance_calories *= 1.2
+            shred_calories *= 1.2
+            bulk_calories *= 1.2  
+        elif activity_level.lower() == "average":
+            maintenance_calories *= 1.5
+            shred_calories *= 1.5
+            bulk_calories *= 1.5   
+        elif activity_level.lower() == "very active":
+            maintenance_calories *= 1.8
+            shred_calories *= 1.8
+            bulk_calories *= 1.8
+        return {
+            "maintenance": maintenance_calories,
+            "shred": shred_calories,
+            "bulk": bulk_calories
+        }
 #Elizabeth: f-strings, optional parameters, sequence unpacking
-def calculate_nutrition_plan(calories, goal):
-    calories = calories.calculate_maintenance_calories()
-    if goal == 'shred':
-        calories = calories.calculate_shred_calories()
-        advice = "Focus on high protein intake and increase cardio."
-    elif goal == 'bulk':
-        calories = calories.calculate_bulk_calories()
-        advice = "Ensure you are getting enough carbs and protein for recovery."
-    else: 
-        advice = "Maintain a balanced diet to keep your current body weight."
-    return calories, advice
-def display_nutrition_calories(calories, goal, detailed=True):
-    calories, advice = calculate_nutrition_plan(calories, goal)
-    caloric_intake_info = f"Your daily caloric intake should be approximately {calories} calories."
-    if detailed:
-        print(f"For your goal to {goal}, {caloric_intake_info}")
-        print(advice)
-    else:
-        print(caloric_intake_info)
+    def calculate_nutrition_plan(calories, goal):
+        calories = calories.calculate_maintenance_calories()
+        if goal == 'shred':
+            calories = calories.calculate_shred_calories()
+            advice = "Focus on high protein intake and increase cardio."
+        elif goal == 'bulk':
+            calories = calories.calculate_bulk_calories()
+            advice = "Ensure you are getting enough carbs and protein for recovery."
+        else: 
+            advice = "Maintain a balanced diet to keep your current body weight."
+        return calories, advice
+    def display_nutrition_calories(calories, goal, detailed=True):
+        calories, advice = calculate_nutrition_plan(calories, goal)
+        caloric_intake_info = f"Your daily caloric intake should be approximately {calories} calories."
+        if detailed:
+            print(f"For your goal to {goal}, {caloric_intake_info}")
+            print(advice)
+        else:
+            print(caloric_intake_info)
 
 class Meals: 
 #Colby: optional parameters and/or keyword arguments, Conditional Expressions,
