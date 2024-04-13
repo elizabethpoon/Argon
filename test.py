@@ -116,7 +116,7 @@ class Meals:
 #To get meal data it will be given in a different method
 #that will be able to read from a file of different meals
 #with open(file_path, mode = "r", encoding = "utf-8") as file:
-    def Give_meal_options(self, user_allergies=None, user_preferences=None):
+    def give_meal_options(self, user_allergies=None, user_preferences=None):
         """
         Provides meal options based on user's allergies and preferences
 
