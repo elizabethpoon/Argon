@@ -180,12 +180,12 @@ class Meals:
         pounds = int(calories) / 3500 
         pounds_per_week = pounds / 16 #this will give the pound change per week 
         
-        if goal == "lose": 
+        if goal == "shred": 
             for i in graph.num_rows: 
                 x = current_weight - pounds_per_week*i
                 change = np.append(change, x)
             
-        if goal == "gain": 
+        if goal == "bulk": 
             for i in range(graph.num_rows): 
                 x = current_weight + pounds_per_week*i
                 change = np.append(change, x)
