@@ -86,7 +86,7 @@ class Calories:
             "bulk": bulk_calories
         }
 #Elizabeth: f-strings, optional parameters, sequence unpacking
-    def calculate_nutrition_plan(calories, goal):
+    def calculate_nutrition_plan(self, calories, goal):
         calories = calories.calculate_maintenance_calories()
         if goal == 'shred':
             calories = calories.calculate_shred_calories()
@@ -97,6 +97,7 @@ class Calories:
         else: 
             advice = "Maintain a balanced diet to keep your current body weight."
         return calories, advice
+        
     def display_nutrition_calories(calories, goal, detailed=True):
         calories, advice = calculate_nutrition_plan(calories, goal)
         caloric_intake_info = f"Your daily caloric intake should be approximately {calories} calories."
@@ -160,9 +161,10 @@ class Meals:
             meal, ingredients = sorted_meal_options[meal_index]
         print(f"{meal}: {', '.join(ingredients)}")
         return meal_options
+        
 #no file path has been created yet
 
-    def graph(calories):
+    def graph(self, calories):
         '''
         This method seeks to determine how many pounds a person needs to lose per week to get to their desired weight. 
 
