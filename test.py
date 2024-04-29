@@ -110,7 +110,7 @@ class Meals:
 #To get meal data it will be given in a different method
 #that will be able to read from a file of different meals
 #with open(file_path, mode = "r", encoding = "utf-8") as file:
-    def give_meal_options(self, user_allergies=None, user_preferences=None):
+    def give_meal_options(user_allergies=None, user_preferences=None):
         """
         Provides meal options based on user's allergies and preferences
 
@@ -124,37 +124,45 @@ class Meals:
             list or None: A list of tuples containing meal options (meal name and ingredients),
             or None if no suitable meal options are found
         """
+#working example data for presentation        
+        meals_data = {
+            "Meal 1": ["chicken", "rice", "broccoli"],
+            "Meal 2": ["beef", "potatoes", "carrots"],
+            "Meal 3": ["salmon", "quinoa", "asparagus"],
+            "Meal 4": ["pasta", "tomatoes", "spinach"],
+            "Meal 5": ["tofu", "brown rice", "green beans"]
+        }
 #Prompt user to input allergies and preferences
         if user_allergies is None:
-            user_allergies = input("Enter your allergies (separate by comma):").split(", ")
+            user_allergies = input("Enter your allergies (separate by comma):").strip().split(", ")
         if user_preferences is None:
-            user_preferences = input("Enter your meal preferences (separate by comma):").split(", ")
+            user_preferences = input("Enter your meal preferences (separate by comma):").strip().split(", ")
 
         possible_meals = []
-        for meal, ingredients in self.meals_data.items():
-            suitable = True
-            if self.user_preferences:
-                preferences_present = all(preference in ingredients for preference in self.user_preferences)
-                suitable = preferences_present == False
-            else:
-                allergies_present = all(allergy in ingredients for allergy in self.user_allergies)
-                suitable = allergies_present == False
-            if suitable:
-                possible_meals.append((meal, ingredients))
+        for meal, ingredients in meals_data.items():
+            allergies_present = any(allergy in ingredients for allergy in user_allergies)
+
+            if allergies_present:
+                continue
+            match_count = sum(1 for preference in user_preferences if preference in ingredients)
+            possible_meals.append((meal, ingredients, match_count))
 
         if len(possible_meals) == 0:
             return None
-
+        sorted_meals = sorted(possible_meals, key=lambda x: (x[2], x[0]), reverse=True)
         num_meals_to_select = min(3, len(possible_meals))
-        meal_options = random.sample(possible_meals, num_meals_to_select)
-
-        print("Here are your 3 meal options:")
-        sorted_meal_options = sorted(meal_options, key=lambda x: x[0])
-        for meal_index in range(len(sorted_meal_options)):
-            meal, ingredients = sorted_meal_options[meal_index]
-        print(f"{meal}: {', '.join(ingredients)}")
-        return meal_options
+        meal_options = random.sample(sorted_meals[:num_meals_to_select], num_meals_to_select)
         
+        if meal_options:
+            print("Here are your 3 meal options:")
+            for meal_index in range(len(meal_options)):
+                meal, ingredients, _ = meal_options[meal_index]
+                print(f"{meal}: {', '.join(ingredients)}")
+        else:
+            print("Sorry, we couldn't find suitable meal options for your allergies and preferences.")
+        return meal_options
+        # Usage example:
+    give_meal_options()
 #no file path has been created yet
 
     def graph(self, calories):
