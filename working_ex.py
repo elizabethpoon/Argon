@@ -179,3 +179,22 @@ calories = Calories("guidelines.txt", user.height, user.weight, user.age, user.s
 Nutrition.display_nutrition_calories(calories, 'shred')
 Meals.get_meal_options()
 Meals.graph(user.weight, "lose", 500)  # Assuming 500 calories deficit for illustration
+
+def parse_args(arglist):
+    """Parse command-line arguments.
+    
+    Expect mandatory arguments:
+      - 
+
+    Args:
+       arglist (list of str): arguments from the command line
+    
+    Returns:
+       namespace: the parsed arguments, as a namespace.
+    """
+    parser = ArgumentParser()
+    parser.add_argument()
+
+if __name__ == "__main__":
+    args = parse_args(sys:argv[1:])
+    main(args. , args. , args. , args. )
