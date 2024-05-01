@@ -1,6 +1,7 @@
 import random
 import numpy as np
 from datascience import *
+from argsparse import ArgumentParser
 import matplotlib
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
