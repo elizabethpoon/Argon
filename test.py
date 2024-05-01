@@ -57,7 +57,7 @@ class Calories:
             shred_calories *= 1.3
             bulk_calories *= 1.3    
             
-        elif self.sport.lower() == "moderate-intensity":
+        elif activity_level.lower() == "moderate-intensity":
             maintenance_calories *= 1.1
             shred_calories *= 1.1
             bulk_calories *= 1.1
@@ -124,7 +124,7 @@ class Meals:
             list or None: A list of tuples containing meal options (meal name and ingredients),
             or None if no suitable meal options are found
         """
-#Prompt user to input allergies and preferences
+#Prompt user to input allergies and preferences; already written in self.allergies
         if user_allergies is None:
             user_allergies = input("Enter your allergies (separate by comma):").split(", ")
         if user_preferences is None:
