@@ -97,6 +97,38 @@ class Calories:
         else:
             print(caloric_intake_info)
 
+    def graph(self, calories):
+        '''
+        This method seeks to determine how many pounds a person needs to lose per week to get to their desired weight. 
+
+        Args: 
+        calories(int): this variable is how many calories a person wants to lose. 
+        
+        Side effects: 
+        Prints a graph to the console
+        
+        '''
+        x = 0
+        change = make_array()
+        graph = Table.read_table('graph - Sheet1.csv')
+        #want this graph to be of four months time, with a tick every week on the x-axis 
+        pounds = int(calories) / 3500 
+        pounds_per_week = pounds / 16 #this will give the pound change per week 
+        
+        if goal == "shred": 
+            for i in graph.num_rows: 
+                x = current_weight - pounds_per_week*i
+                change = np.append(change, x)
+            
+        if goal == "bulk": 
+            for i in range(graph.num_rows): 
+                x = current_weight + pounds_per_week*i
+                change = np.append(change, x)
+
+        new_graph = graph.with_column("Pounds", change)
+
+        print(new_graph.plot("Weekly Basis", "Pounds"))
+    
 class Meals: 
 #Colby: optional parameters and/or keyword arguments, Conditional Expressions,
 #F-strings Containing Expressions, Comprehensions or Generator Expressions,
@@ -162,35 +194,3 @@ class Meals:
         # Usage example:
     give_meal_options()
 #no file path has been created yet
-
-    def graph(self, calories):
-        '''
-        This method seeks to determine how many pounds a person needs to lose per week to get to their desired weight. 
-
-        Args: 
-        calories(int): this variable is how many calories a person wants to lose. 
-        
-        Side effects: 
-        Prints a graph to the console
-        
-        '''
-        x = 0
-        change = make_array()
-        graph = Table.read_table('graph - Sheet1.csv')
-        #want this graph to be of four months time, with a tick every week on the x-axis 
-        pounds = int(calories) / 3500 
-        pounds_per_week = pounds / 16 #this will give the pound change per week 
-        
-        if goal == "shred": 
-            for i in graph.num_rows: 
-                x = current_weight - pounds_per_week*i
-                change = np.append(change, x)
-            
-        if goal == "bulk": 
-            for i in range(graph.num_rows): 
-                x = current_weight + pounds_per_week*i
-                change = np.append(change, x)
-
-        new_graph = graph.with_column("Pounds", change)
-
-        print(new_graph.plot("Weekly Basis", "Pounds"))
