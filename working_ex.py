@@ -83,7 +83,14 @@ class Calories:
             "bulk": bulk_calories
         }
         
-    def bmi_calculation(self, age, height, weight): 
+    def bmi_calculation(self): 
+        '''
+        This method calculates the Body Mass Index (BMI) of the user and compare it with the average BMI of their age group based on a small sample dataset. 
+
+        This method reads BMI data from a CSV file, calculates the user's BMI using their stored height and weight attributes, 
+        retrieves the average BMI of their age group from the dataset, and compares the user's BMI with the average.
+        '''
+        
         df = pd.read_csv("bmi.csv")
 
         new = df.groupby('Age')['Bmi'].mean()
@@ -140,8 +147,17 @@ class Meals:
             print("Sorry, we couldn't find suitable meal options for your allergies and preferences.")
         return meal_options
 
-    def graph(current_weight, goal, calories):
-        change = make_array()  # Initialize change to an empty array
+    def graph(self, current_weight, goal, calories):
+        '''
+        This method creates a line graph illustrating the expected weight change over time based on the user's current weight,
+        weight change goal, and estimated caloric deficit or surplus.
+
+        Parameters:
+        - current_weight (float): The user's current weight in kilograms.
+        - goal (str): The user's weight change goal. Should be one of: "lose" or "gain".
+        - calories (int): The estimated caloric deficit (if goal is "lose") or surplus (if goal is "gain") per day.
+        '''
+        change = make_array()
         graph = Table.read_table('graph - Sheet1.csv')
         pounds = int(calories) / 3500
         pounds_per_week = pounds / graph.num_rows
