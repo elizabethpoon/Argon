@@ -1,3 +1,4 @@
+import pandas as pd
 import random
 import numpy as np
 from datascience import *
@@ -80,6 +81,22 @@ class Calories:
             "shred": shred_calories,
             "bulk": bulk_calories
         }
+        
+    def bmi_calculation(self, age, height, weight): 
+        df = pd.read_csv("bmi.csv")
+
+        new = df.groupby('Age')['Bmi'].mean()
+
+        real_age = int(self.age)
+
+        calculated_bmi = (self.weight) / ((self.height)**2)
+
+        mean_bmi = new.loc[real_age]
+
+        if int(calculated_bmi) >= int(mean_bmi): 
+            print(f"The user's calculated BMI is {calculated_bmi}. The user's BMI is less than or equal to the average BMI of their age group.")
+        else: 
+            print(f"The user's calculated BMI is {calculated_bmi}. The user's BMI is greater than the average BMI of their age group.")
 
 class Meals:
     def get_meal_options(user_allergies=None, user_preferences=None):
