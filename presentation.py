@@ -212,7 +212,7 @@ user = User()
 user.get_user_info()
 
 calories = Calories("guidelines.txt", user.height, user.weight, user.age, user.sport, user.daily_activity)
-Calories.bmi_calculation()
+Calories.bmi_calculation(self=user)
 Nutrition.display_nutrition_calories(calories, 'shred')
 Meals.get_meal_options()
 meals_instance = Meals()
