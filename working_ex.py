@@ -1,3 +1,7 @@
+'''
+The purpose of this script is to produce nutrition-based information regarding a user's input, such as their weight, height, goals, allergies, etc. 
+This information includes calorie-intake suggestions, a line graph for weight change, BMI and its comparisons to other people, and finally a list of meals the user could consume. 
+'''
 import pandas as pd
 import random
 import numpy as np
