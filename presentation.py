@@ -1,5 +1,6 @@
 import pandas as pd
 import random
+import json
 import numpy as np
 from datascience import *
 import matplotlib
@@ -126,13 +127,8 @@ class Meals:
             or None if no suitable meal options are found
         """
 #Prompt user to input allergies and preferences
-        meals_data = {
-            "Meal 1": ["chicken", "rice", "broccoli"],
-            "Meal 2": ["beef", "potatoes", "carrots"],
-            "Meal 3": ["salmon", "quinoa", "asparagus"],
-            "Meal 4": ["pasta", "tomatoes", "spinach"],
-            "Meal 5": ["tofu", "brown rice", "green beans"]
-        }
+        with open('meals_data.json', 'r') as meals_list:
+            meals_data = json.load(meals_list)
         if user_allergies is None:
             user_allergies = input("Enter your allergies (comma-separated): ").strip().split(', ')
         if user_preferences is None:
