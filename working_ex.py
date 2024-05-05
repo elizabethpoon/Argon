@@ -215,6 +215,7 @@ user.get_user_info()
 calories = Calories("guidelines.txt", user.height, user.weight, user.age, user.sport, user.daily_activity)
 
 Nutrition.display_nutrition_calories(calories, 'shred')
+Nutrition.bmi_calculation()
 Meals.get_meal_options()
 Meals.graph(user.weight, "lose", 500)  # Assuming 500 calories deficit for illustration
 
@@ -235,4 +236,4 @@ def parse_args(arglist):
 
 if __name__ == "__main__":
     args = parse_args(sys.argv[1:])
-    main(args., args., args., args.)
+    main(args. , args. , args. , args. )

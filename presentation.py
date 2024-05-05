@@ -91,13 +91,9 @@ class Calories:
         '''
         
         df = pd.read_csv("bmi.csv")
-
         new = df.groupby('Age')['Bmi'].mean()
-
         real_age = int(self.age)
-
         calculated_bmi = (self.weight) / ((self.height)**2)
-
         mean_bmi = new.loc[real_age]
 
         if int(calculated_bmi) >= int(mean_bmi): 
@@ -225,11 +221,12 @@ class Nutrition:
             print(caloric_intake_info)
 
 # Calls:
-user = User()
-user.get_user_info()
-calories = Calories("guidelines.txt", user.height, user.weight, user.age, user.sport, user.daily_activity)
-Calories.bmi_calculation(self=user)
-Nutrition.display_nutrition_calories(calories, 'shred') #Assumes shred for presentation
-Meals.get_meal_options()
-meals_instance = Meals()
-meals_instance.graph(user.weight, "lose", 500)  # Assumes 500 calories deficit for illustration
+if __name__ == "__main__":
+    user = User()
+    user.get_user_info()
+    calories = Calories("guidelines.txt", user.height, user.weight, user.age, user.sport, user.daily_activity)
+    Calories.bmi_calculation(self=user)
+    Nutrition.display_nutrition_calories(calories, 'shred') #Assumes shred for presentation
+    Meals.get_meal_options()
+    meals_instance = Meals()
+    meals_instance.graph(user.weight, "lose", 500)  # Assumes 500 calories deficit for illustration
