@@ -105,13 +105,7 @@ class Calories:
 class Meals:
 #Colby: optional parameters and/or keyword arguments, Conditional Expressions,
 #F-strings Containing Expressions, Comprehensions or Generator Expressions,
-#Use of a Key Function with Sorting/Min/Max Functions
-
-#possible use of JSON once file implementation is complete
-
-#To get meal data it will be given in a different method
-#that will be able to read from a file of different meals
-#with open(file_path, mode = "r", encoding = "utf-8") as file:
+#Use of a Key Function with Sorting/Min/Max Functions, json
     def get_meal_options(user_allergies=None, user_preferences=None):
         """
         Provides meal options based on user's allergies and preferences
@@ -127,7 +121,7 @@ class Meals:
             or None if no suitable meal options are found
         """
 #Prompt user to input allergies and preferences
-        with open('meals_data.json', 'r') as meals_list:
+        with open('meals_data.json', 'r', encoding='utf-8') as meals_list:
             meals_data = json.load(meals_list)
         if user_allergies is None:
             user_allergies = input("Enter your allergies (comma-separated): ").strip().split(', ')
@@ -157,7 +151,6 @@ class Meals:
         else:
             print("Sorry, we couldn't find suitable meal options for your allergies and preferences.")
         return meal_options
-#no file path has been created yet
     
     def graph(self, current_weight, goal, calories):
         '''
