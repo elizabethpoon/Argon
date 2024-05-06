@@ -174,7 +174,7 @@ class Meals:
         '''
         change = make_array()
         graph = Table.read_table('graph - Sheet1.csv')
-        #want this graph to be of four months time, with a tick every week on the x-axis 
+        #want this graph to be of fifteen months time, with a tick every week on the x-axis 
         pounds = int(calories) / 3500
         pounds_per_week = pounds / graph.num_rows #this will give the pound change per week
 
