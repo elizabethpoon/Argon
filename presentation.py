@@ -16,7 +16,7 @@ class User:
         self.height = float(input("Height (in meters): "))
         self.weight = float(input("Weight (in kg): "))
         self.age = int(input("Age: "))
-        self.sport = input("Sport (high-intensity/moderate-intensity): ")
+        self.sport = input("Sport (high-intensity/moderate-intensity/low-intensity): ")
         self.daily_activity = input("Daily Activities (lightly active/average/very active): ")
         self.goal = input("Goal (shred/bulk/maintenance): ")
 
@@ -36,6 +36,7 @@ class Calories:
         self.goal = user_goal
     
     def _read_guidelines(self, goal):
+        #Matt: with statement 
         with open(self.guidelines_file, 'r', encoding='utf-8') as file:
             for line in file:
                 if line.startswith(goal):
@@ -54,6 +55,7 @@ class Calories:
         return self.calculate_custom_calories(guidelines)
 
     def calculate_custom_calories(self, guidelines):
+        #Matt: comprehensions
         # Parse guidelines from the file
         guideline_values = [float(val) for val in guidelines.split(',')[1:]]
         maintenance_calories = (10 * self.weight) + (6.25 * self.height * 100) - (5 * self.age) + 5
@@ -65,6 +67,10 @@ class Calories:
             shred_calories *= 1.3
             bulk_calories *= 1.3
         elif self.sport.lower() == "moderate-intensity":
+            maintenance_calories *= 1.2
+            shred_calories *= 1.2
+            bulk_calories *= 1.2
+        elif self.sport.lower() == "low-intensity": 
             maintenance_calories *= 1.1
             shred_calories *= 1.1
             bulk_calories *= 1.1
