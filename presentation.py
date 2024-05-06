@@ -86,6 +86,7 @@ class Calories:
             "bulk": bulk_calories
         }
     def bmi_calculation(self): 
+        #Pragya: using grouby for pandas dataframes
         '''
         This method calculates the Body Mass Index (BMI) of the user and compare it with the average BMI of their age group based on a small sample dataset. 
 
@@ -155,6 +156,7 @@ class Meals:
         return meal_options
     
     def graph(self, current_weight, goal, calories):
+        #Pragya: visualization using pyplot
         '''
         This method creates a line graph illustrating the expected weight change over time based on the user's current weight,
         weight change goal, and estimated caloric deficit or surplus.
@@ -221,7 +223,7 @@ if __name__ == "__main__":
     user.get_user_info()
     calories = Calories("guidelines.txt", user.height, user.weight, user.age, user.sport, user.daily_activity, user.goal)
     Calories.bmi_calculation(self=user)
-    Nutrition.display_nutrition_calories(calories, user.goal) #Assumes shred for presentation
+    Nutrition.display_nutrition_calories(calories, user.goal) 
     Meals.get_meal_options()
     meals_instance = Meals()
     meals_instance.graph(user.weight, user.goal, 500)  # Assumes 500 calories deficit for illustration
