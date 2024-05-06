@@ -212,11 +212,12 @@ class Nutrition:
             calories = calories.calculate_bulk_calories()
             advice = "Ensure you are getting enough carbs and protein for recovery."
         elif goal == 'maintenance':
+            advice = "Maintain a balanced diet to keep your current body weight."
             calories = calories.calculate_maintenance_calories()
         return calories, advice
     def display_nutrition_calories(calories, goal, detailed=True):
         calories, advice = Nutrition.calculate_nutrition_plan(calories, goal)
-        caloric_intake_info = f"Your daily caloric intake should be approximately {calories['maintenance']:.2f} calories."
+        caloric_intake_info = f"Your daily caloric intake should be approximately {calories[user.goal]:.2f} calories."
         if detailed:
             print(f"For your goal to {user.goal}, {caloric_intake_info}")
             print(advice)
