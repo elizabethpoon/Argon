@@ -18,21 +18,23 @@ class User:
         self.age = int(input("Age: "))
         self.sport = input("Sport (high-intensity/moderate-intensity): ")
         self.daily_activity = input("Daily Activities (lightly active/average/very active): ")
+        self.goal = input("Goal (shred/bulk/maintenance): ")
 
-        print(f"This is {self.name}. Their height is {self.height}. Their weight is {self.weight}. Their age is {self.age}. The sport they play is {self.sport}. Their daily activities include {self.daily_activity}.")
+        print(f"This is {self.name}. Their height is {self.height}. Their weight is {self.weight}. Their age is {self.age}. The sport they play is {self.sport}. Their daily activities include {self.daily_activity}. Their goal is to {self.goal}.")
 
 class Calories:
     """
     This class allows users to obtain personalized calorie plans based on their input and the guidelines provided in the text file. The calculation considers factors such as user's height, weight, sport intensity, and daily activity level to provide tailored calorie plans for maintenance, shredding, and bulking.
     """
-    def __init__(self, guidelines_file, user_height, user_weight, user_age, user_sport, user_daily_activity):
+    def __init__(self, guidelines_file, user_height, user_weight, user_age, user_sport, user_daily_activity, user_goal):
         self.guidelines_file = guidelines_file
         self.height = user_height
         self.weight = user_weight
         self.age = user_age  
         self.sport = user_sport
         self.daily_activity = user_daily_activity
-
+        self.goal = user_goal
+    
     def _read_guidelines(self, goal):
         with open(self.guidelines_file, 'r', encoding='utf-8') as file:
             for line in file:
@@ -168,12 +170,16 @@ class Meals:
         pounds = int(calories) / 3500
         pounds_per_week = pounds / graph.num_rows #this will give the pound change per week
 
-        if goal == "lose":
+        if goal == "maintenance":
+            for i in range(graph.num_rows):
+                x_val = current_weight
+                change = np.append(change, x_val)
+        if goal == "shred":
             for i in range(graph.num_rows):
                 x_val = current_weight - pounds_per_week * i
                 change = np.append(change, x_val)
 
-        if goal == "gain":
+        if goal == "bulk":
             for i in range(graph.num_rows):
                 x_val = current_weight + pounds_per_week * i
                 change = np.append(change, x_val)
@@ -197,14 +203,14 @@ class Nutrition:
         elif goal == 'bulk':
             calories = calories.calculate_bulk_calories()
             advice = "Ensure you are getting enough carbs and protein for recovery."
-        else:
-            advice = "Maintain a balanced diet to keep your current body weight."
+        elif goal == 'maintenance':
+            calories = calories.calculate_maintenance_calories()
         return calories, advice
     def display_nutrition_calories(calories, goal, detailed=True):
         calories, advice = Nutrition.calculate_nutrition_plan(calories, goal)
         caloric_intake_info = f"Your daily caloric intake should be approximately {calories['maintenance']:.2f} calories."
         if detailed:
-            print(f"For your goal to {goal}, {caloric_intake_info}")
+            print(f"For your goal to {user.goal}, {caloric_intake_info}")
             print(advice)
         else:
             print(caloric_intake_info)
@@ -213,9 +219,9 @@ class Nutrition:
 if __name__ == "__main__":
     user = User()
     user.get_user_info()
-    calories = Calories("guidelines.txt", user.height, user.weight, user.age, user.sport, user.daily_activity)
+    calories = Calories("guidelines.txt", user.height, user.weight, user.age, user.sport, user.daily_activity, user.goal)
     Calories.bmi_calculation(self=user)
-    Nutrition.display_nutrition_calories(calories, 'shred') #Assumes shred for presentation
+    Nutrition.display_nutrition_calories(calories, user.goal) #Assumes shred for presentation
     Meals.get_meal_options()
     meals_instance = Meals()
-    meals_instance.graph(user.weight, "lose", 500)  # Assumes 500 calories deficit for illustration
+    meals_instance.graph(user.weight, user.goal, 500)  # Assumes 500 calories deficit for illustration
