@@ -59,7 +59,7 @@ class Calories:
         #Matt: comprehensions
         # Parse guidelines from the file
         guideline_values = [float(val) for val in guidelines.split(',')[1:]]
-        maintenance_calories = (10 * self.weight) + (6.25 * self.height * 100) - (5 * self.age) + 5
+        maintenance_calories = 655.47 + (10 * self.weight) + (4.87 * self.height * 100) - (5 * self.age)
         original_calories = maintenance_calories
         shred_calories = maintenance_calories - 500
         bulk_calories = maintenance_calories + 500
@@ -185,8 +185,8 @@ class Meals:
         change = make_array()
         graph = Table.read_table('graph - Sheet1.csv')
         #want this graph to be of fifteen months time, with a tick every week on the x-axis 
-        pounds = int(calories) / 3500
-        pounds_per_week = pounds / graph.num_rows #this will give the pound change per week
+        kilos = int(calories) / 3500
+        kilos_per_week = kilos / graph.num_rows #this will give the pound change per week
 
         if goal == "maintenance":
             for i in range(graph.num_rows):
@@ -194,12 +194,11 @@ class Meals:
                 change = np.append(change, x_val)
         if goal == "shred":
             for i in range(graph.num_rows):
-                x_val = current_weight - pounds_per_week * i
+                x_val = current_weight + kilos_per_week * i
                 change = np.append(change, x_val)
-
         if goal == "bulk":
-            for i in range(graph.num_rows):
-                x_val = current_weight + pounds_per_week * i
+            for i in range(graph.num_rows): 
+                x_val = current_weight + kilos_per_week * i
                 change = np.append(change, x_val)
 
         x = np.arange(0, len(change), 1)
@@ -241,6 +240,7 @@ if __name__ == "__main__":
     calories = Calories("guidelines.txt", user.height, user.weight, user.age, user.sport, user.daily_activity, user.goal)
     Calories.bmi_calculation(self=user)
     nutrition = Nutrition()
+    
     nutrition.display_nutrition_calories(calories, user.goal)
     Meals.get_meal_options()
     meals_instance = Meals()

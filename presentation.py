@@ -233,4 +233,4 @@ if __name__ == "__main__":
     Nutrition.display_nutrition_calories(calories, user.goal) 
     Meals.get_meal_options()
     meals_instance = Meals()
-    meals_instance.graph(user.weight, user.goal, 500)  # Assumes 500 calories deficit for illustration
+    meals_instance.graph(user.weight, user.goal, 500)

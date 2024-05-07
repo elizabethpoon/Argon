@@ -53,7 +53,7 @@ class Meals:
         graph = Table.read_table('graph - Sheet1.csv')
         #want this graph to be of fifteen months time, with a tick every week on the x-axis 
         kilos = int(calories) / 3500
-        kilos_per_week = kilos / graph.num_rows #this will give the pound change per week
+        kilos_per_week = kilos / graph.num_rows #this will give the kilo change per week
 
         if goal == "maintenance":
             for i in range(graph.num_rows):
@@ -71,7 +71,7 @@ class Meals:
 
         x = np.arange(0, len(change), 1)
 
-        new_graph = graph.with_column("Kilos", change)
+        new_graph = graph.with_column("Pounds", change)
 
         plt.plot(x, change)
         plt.xlabel("Weeks")
@@ -89,8 +89,7 @@ if __name__ == "__main__":
     user.get_user_info()
     calories = Calories("guidelines.txt", user.height, user.weight, user.age, user.sport, user.daily_activity, user.goal)
     Calories.bmi_calculation(self=user)
-    nutrition = Nutrition()
-    nutrition.display_nutrition_calories(calories, user.goal)
+    Nutrition.display_nutrition_calories(calories, user.goal) 
     Meals.get_meal_options()
     meals_instance = Meals()
-    meals_instance.graph(user.weight, user.goal, calories.caloriechange)  
+    meals_instance.graph(user.weight, user.goal, 500)
