@@ -79,13 +79,13 @@ class Calories:
             shred_calories *= 1.2
             bulk_calories *= 1.2
         elif self.daily_activity.lower() == "average":
-            maintenance_calories *= 1.5
-            shred_calories *= 1.5
-            bulk_calories *= 1.5
+            maintenance_calories *= 1.3
+            shred_calories *= 1.3
+            bulk_calories *= 1.3
         elif self.daily_activity.lower() == "very active":
-            maintenance_calories *= 1.8
-            shred_calories *= 1.8
-            bulk_calories *= 1.8
+            maintenance_calories *= 1.4
+            shred_calories *= 1.4
+            bulk_calories *= 1.4
         return {
             "maintenance": maintenance_calories,
             "shred": shred_calories,
