@@ -52,8 +52,8 @@ class Meals:
         change = make_array()
         graph = Table.read_table('graph - Sheet1.csv')
         #want this graph to be of fifteen months time, with a tick every week on the x-axis 
-        pounds = int(calories) / 3500
-        pounds_per_week = pounds / graph.num_rows #this will give the pound change per week
+        kilos = int(calories) / 3500
+        kilos_per_week = kilos / graph.num_rows #this will give the pound change per week
 
         if goal == "maintenance":
             for i in range(graph.num_rows):
@@ -61,17 +61,17 @@ class Meals:
                 change = np.append(change, x_val)
         if goal == "shred":
             for i in range(graph.num_rows):
-                x_val = current_weight - pounds_per_week * i
+                x_val = current_weight - kilos_per_week * i
                 change = np.append(change, x_val)
 
         if goal == "bulk":
             for i in range(graph.num_rows):
-                x_val = current_weight + pounds_per_week * i
+                x_val = current_weight + kilos_per_week * i
                 change = np.append(change, x_val)
 
         x = np.arange(0, len(change), 1)
 
-        new_graph = graph.with_column("Pounds", change)
+        new_graph = graph.with_column("Kilos", change)
 
         plt.plot(x, change)
         plt.xlabel("Weeks")
@@ -89,7 +89,8 @@ if __name__ == "__main__":
     user.get_user_info()
     calories = Calories("guidelines.txt", user.height, user.weight, user.age, user.sport, user.daily_activity, user.goal)
     Calories.bmi_calculation(self=user)
-    Nutrition.display_nutrition_calories(calories, user.goal) 
+    nutrition = Nutrition()
+    nutrition.display_nutrition_calories(calories, user.goal)
     Meals.get_meal_options()
     meals_instance = Meals()
-    meals_instance.graph(user.weight, user.goal, 500)  # Assumes 500 calories deficit for illustration
+    meals_instance.graph(user.weight, user.goal, calories.caloriechange)  
