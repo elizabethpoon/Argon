@@ -1,30 +1,44 @@
+import pandas as pd
 import random
+import json
 import numpy as np
 from datascience import *
 import matplotlib
-%matplotlib inline
+matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 plt.style.use('fivethirtyeight')
 
-class Calories: 
+class User:
+    #Michael: f-strings and input() function
+    
+    def get_user_info(self):
+        self.name = input("Name: ")
+        self.height = float(input("Height (in meters): "))
+        self.weight = float(input("Weight (in kg): "))
+        self.age = int(input("Age: "))
+        self.sport = input("Sport (high-intensity/moderate-intensity/low-intensity): ")
+        self.daily_activity = input("Daily Activities (lightly active/average/very active): ")
+        self.goal = input("Goal (shred/bulk/maintenance): ")
+
+        print(f"This is {self.name}. Their height is {self.height}. Their weight is {self.weight}. Their age is {self.age}. The sport they play is {self.sport}. Their daily activities include {self.daily_activity}. Their goal is to {self.goal}.")
+
+class Calories:
     """
     This class allows users to obtain personalized calorie plans based on their input and the guidelines provided in the text file. The calculation considers factors such as user's height, weight, sport intensity, and daily activity level to provide tailored calorie plans for maintenance, shredding, and bulking.
     """
-    #Michael: f-strings and input() function
+    def __init__(self, guidelines_file, user_height, user_weight, user_age, user_sport, user_daily_activity, user_goal):
+        self.guidelines_file = guidelines_file
+        self.height = user_height
+        self.weight = user_weight
+        self.age = user_age  
+        self.sport = user_sport
+        self.daily_activity = user_daily_activity
+        self.goal = user_goal
+        self.caloriechange = 0
     
-    def __init__(self, name, height, weight, age, allergies, sport, daily_activity):
-        self.name = input("Name: ")
-        self.height = input("Height: ")
-        self.weight = input("Weight: ")
-        self.age = input("Age: ")
-        self.allergies = input("Allergies: ")
-        self.sport = input("Sport: ")
-        self.daily_activity = input("Daily Activities: ")
-
-        print (f"This is {name}. Their height is {height}. Their weight is {weight}. Their age is {age}. The allergies that they have are {allergies}. The sport they play is {sport}. Their daily activities include {daily_activity}.")
-
     def _read_guidelines(self, goal):
-        with open(self.guidelines_file, 'r', encoding = 'utf-8') as file:
+        #Matt: with statement 
+        with open(self.guidelines_file, 'r', encoding='utf-8') as file:
             for line in file:
                 if line.startswith(goal):
                     return next(file).strip()
@@ -41,105 +55,77 @@ class Calories:
         guidelines = self._read_guidelines("bulk")
         return self.calculate_custom_calories(guidelines)
 
-    def calculate_custom_calories(self):
-        height_meters = self.height
-        weight_kg = self.weight
-        activity_level = self.daily_activity
-        maintenance_calories = (10 * weight_kg) + (6.25 * height_meters * 100)
-        - (5 * 25) + 5
-        shred_calories = maintenance_calories - 500  
-        bulk_calories = maintenance_calories + 500 
-        
-        if  self.sport.lower() == "high-intensity":
+    def calculate_custom_calories(self, guidelines):
+        #Matt: comprehensions
+        # Parse guidelines from the file
+        guideline_values = [float(val) for val in guidelines.split(',')[1:]]
+        maintenance_calories = (10 * self.weight) + (6.25 * self.height * 100) - (5 * self.age) + 5
+        original_calories = maintenance_calories
+        shred_calories = maintenance_calories - 500
+        bulk_calories = maintenance_calories + 500
+
+        if self.sport.lower() == "high-intensity":
             maintenance_calories *= 1.3
             shred_calories *= 1.3
-            bulk_calories *= 1.3    
-        elif activity_level.lower() == "moderate-intensity":
+            bulk_calories *= 1.3
+        elif self.sport.lower() == "moderate-intensity":
+            maintenance_calories *= 1.2
+            shred_calories *= 1.2
+            bulk_calories *= 1.2
+        elif self.sport.lower() == "low-intensity": 
             maintenance_calories *= 1.1
             shred_calories *= 1.1
             bulk_calories *= 1.1
-        if activity_level.lower() == "lightly active":
+        if self.daily_activity.lower() == "lightly active":
             maintenance_calories *= 1.2
             shred_calories *= 1.2
-            bulk_calories *= 1.2  
-        elif activity_level.lower() == "average":
-            maintenance_calories *= 1.5
-            shred_calories *= 1.5
-            bulk_calories *= 1.5   
-        elif activity_level.lower() == "very active":
-            maintenance_calories *= 1.8
-            shred_calories *= 1.8
-            bulk_calories *= 1.8
+            bulk_calories *= 1.2
+        elif self.daily_activity.lower() == "average":
+            maintenance_calories *= 1.3
+            shred_calories *= 1.3
+            bulk_calories *= 1.3
+        elif self.daily_activity.lower() == "very active":
+            maintenance_calories *= 1.4
+            shred_calories *= 1.4
+            bulk_calories *= 1.4
+        
+        if user.goal == "maintenance": 
+            self.caloriechange = maintenance_calories - original_calories 
+        elif user.goal == "shred": 
+            self.caloriechange = shred_calories - original_calories 
+        elif user.goal == "bulk": 
+            self.caloriechange = bulk_calories - original_calories 
+            
         return {
             "maintenance": maintenance_calories,
             "shred": shred_calories,
             "bulk": bulk_calories
         }
-#Elizabeth: f-strings, optional parameters, sequence unpacking
-    def calculate_nutrition_plan(self, calories, goal):
-        calories = calories.calculate_maintenance_calories()
-        if goal == 'shred':
-            calories = calories.calculate_shred_calories()
-            advice = "Focus on high protein intake and increase cardio."
-        elif goal == 'bulk':
-            calories = calories.calculate_bulk_calories()
-            advice = "Ensure you are getting enough carbs and protein for recovery."
+    def bmi_calculation(self): 
+        #Pragya: using grouby for pandas dataframes
+        '''
+        This method calculates the Body Mass Index (BMI) of the user and compare it with the average BMI of their age group based on a small sample dataset. 
+
+        This method reads BMI data from a CSV file, calculates the user's BMI using their stored height and weight attributes, 
+        retrieves the average BMI of their age group from the dataset, and compares the user's BMI with the average.
+        '''
+        
+        df = pd.read_csv("bmi.csv")
+        new = df.groupby('Age')['Bmi'].mean()
+        real_age = int(self.age)
+        calculated_bmi = (self.weight) / ((self.height)**2)
+        mean_bmi = new.loc[real_age]
+
+        if int(calculated_bmi) >= int(mean_bmi): 
+            print(f"The user's calculated BMI is {calculated_bmi}. The user's BMI is less than or equal to the average BMI of their age group.")
         else: 
-            advice = "Maintain a balanced diet to keep your current body weight."
-        return calories, advice
-        
-    def display_nutrition_calories(calories, goal, detailed=True):
-        calories, advice = Calories.calculate_nutrition_plan(calories, goal)
-        caloric_intake_info = f"Your daily caloric intake should be approximately {calories} calories."
-        if detailed:
-            print(f"For your goal to {goal}, {caloric_intake_info}")
-            print(advice)
-        else:
-            print(caloric_intake_info)
+            print(f"The user's calculated BMI is {calculated_bmi}. The user's BMI is greater than the average BMI of their age group.")
 
-    def graph(self, calories):
-        '''
-        This method seeks to determine how many pounds a person needs to lose per week to get to their desired weight. 
-
-        Args: 
-        calories(int): this variable is how many calories a person wants to lose. 
-        
-        Side effects: 
-        Prints a graph to the console
-        
-        '''
-        x = 0
-        change = make_array()
-        graph = Table.read_table('graph - Sheet1.csv')
-        #want this graph to be of four months time, with a tick every week on the x-axis 
-        pounds = int(calories) / 3500 
-        pounds_per_week = pounds / 16 #this will give the pound change per week 
-        
-        if goal == "shred": 
-            for i in graph.num_rows: 
-                x = current_weight - pounds_per_week*i
-                change = np.append(change, x)
-            
-        if goal == "bulk": 
-            for i in range(graph.num_rows): 
-                x = current_weight + pounds_per_week*i
-                change = np.append(change, x)
-
-        new_graph = graph.with_column("Pounds", change)
-
-        print(new_graph.plot("Weekly Basis", "Pounds"))
-    
-class Meals: 
+class Meals:
 #Colby: optional parameters and/or keyword arguments, Conditional Expressions,
 #F-strings Containing Expressions, Comprehensions or Generator Expressions,
-#Use of a Key Function with Sorting/Min/Max Functions
-
-#possible use of JSON once file implementation is complete
-
-#To get meal data it will be given in a different method
-#that will be able to read from a file of different meals
-#with open(file_path, mode = "r", encoding = "utf-8") as file:
-    def give_meal_options(user_allergies=None, user_preferences=None):
+#Use of a Key Function with Sorting/Min/Max Functions, json
+    def get_meal_options(user_allergies=None, user_preferences=None):
         """
         Provides meal options based on user's allergies and preferences
 
@@ -153,25 +139,17 @@ class Meals:
             list or None: A list of tuples containing meal options (meal name and ingredients),
             or None if no suitable meal options are found
         """
-        
-        meals_data = {
-            "Meal 1": ["chicken", "rice", "broccoli"], 
-            "Meal 2": ["beef", "potatoes," "carrots"], 
-            "Meal 3": ["salmon, quinoa, asparagus", "peanuts"], 
-            "Meal 4": ["pasta", "tomatoes", "spinach"], 
-            "Meal 5": ["tofu", "brown rice", "green beans"]
-            
-        }
 #Prompt user to input allergies and preferences
+        with open('meals_data.json', 'r', encoding='utf-8') as meals_list:
+            meals_data = json.load(meals_list)
         if user_allergies is None:
-            user_allergies = input("Enter your allergies (separate by comma):").strip().split(", ")
+            user_allergies = input("Enter your allergies (comma-separated): ").strip().split(', ')
         if user_preferences is None:
-            user_preferences = input("Enter your meal preferences (separate by comma):").strip().split(", ")
+            user_preferences = input("Enter your meal preferences (comma-separated): ").strip().split(', ')
 
         possible_meals = []
         for meal, ingredients in meals_data.items():
             allergies_present = any(allergy in ingredients for allergy in user_allergies)
-
             if allergies_present:
                 continue
             match_count = sum(1 for preference in user_preferences if preference in ingredients)
@@ -179,18 +157,91 @@ class Meals:
 
         if len(possible_meals) == 0:
             return None
+
         sorted_meals = sorted(possible_meals, key=lambda x: (x[2], x[0]), reverse=True)
-        num_meals_to_select = min(3, len(possible_meals))
+        num_meals_to_select = min(3, len(sorted_meals))
         meal_options = random.sample(sorted_meals[:num_meals_to_select], num_meals_to_select)
-        
+
         if meal_options:
-            print("Here are your 3 meal options:")
+            print("Here are your meal options for today:")
             for meal_index in range(len(meal_options)):
                 meal, ingredients, _ = meal_options[meal_index]
                 print(f"{meal}: {', '.join(ingredients)}")
         else:
             print("Sorry, we couldn't find suitable meal options for your allergies and preferences.")
         return meal_options
-        # Usage example:
-    give_meal_options()
-#no file path has been created yet
+    
+    def graph(self, current_weight, goal, calories):
+        #Pragya: visualization using pyplot
+        '''
+        This method creates a line graph illustrating the expected weight change over time based on the user's current weight,
+        weight change goal, and estimated caloric deficit or surplus.
+
+        Parameters:
+        - current_weight (float): The user's current weight in kilograms.
+        - goal (str): The user's weight change goal. Should be one of: "lose" or "gain".
+        - calories (int): The estimated caloric deficit (if goal is "lose") or surplus (if goal is "gain") per day.
+        '''
+        change = make_array()
+        graph = Table.read_table('graph - Sheet1.csv')
+        #want this graph to be of fifteen months time, with a tick every week on the x-axis 
+        pounds = int(calories) / 3500
+        pounds_per_week = pounds / graph.num_rows #this will give the pound change per week
+
+        if goal == "maintenance":
+            for i in range(graph.num_rows):
+                x_val = current_weight
+                change = np.append(change, x_val)
+        if goal == "shred":
+            for i in range(graph.num_rows):
+                x_val = current_weight - pounds_per_week * i
+                change = np.append(change, x_val)
+
+        if goal == "bulk":
+            for i in range(graph.num_rows):
+                x_val = current_weight + pounds_per_week * i
+                change = np.append(change, x_val)
+
+        x = np.arange(0, len(change), 1)
+
+        new_graph = graph.with_column("Pounds", change)
+
+        plt.plot(x, change)
+        plt.xlabel("Weeks")
+        plt.ylabel("Weight (kgs)")
+        plt.title("Weight Change Over Time")
+        plt.show()
+
+class Nutrition:
+#Elizabeth: f-strings, optional parameters, sequence unpacking
+    def calculate_nutrition_plan(self, calories, goal):
+        if goal == 'shred':
+            calories = calories.calculate_shred_calories()
+            advice = "Focus on high protein intake and increase cardio."
+        elif goal == 'bulk':
+            calories = calories.calculate_bulk_calories()
+            advice = "Ensure you are getting enough carbs and protein for recovery."
+        elif goal == 'maintenance':
+            advice = "Maintain a balanced diet to keep your current body weight."
+            calories = calories.calculate_maintenance_calories()
+        return calories, advice
+    def display_nutrition_calories(self, calories, goal, detailed=True):
+        calories, advice = self.calculate_nutrition_plan(calories, goal)
+        caloric_intake_info = f"Your daily caloric intake should be approximately {calories[user.goal]:.2f} calories."
+        if detailed:
+            print(f"For your goal to {user.goal}, {caloric_intake_info}")
+            print(advice)
+        else:
+            print(caloric_intake_info)
+
+# Calls:
+if __name__ == "__main__":
+    user = User()
+    user.get_user_info()
+    calories = Calories("guidelines.txt", user.height, user.weight, user.age, user.sport, user.daily_activity, user.goal)
+    Calories.bmi_calculation(self=user)
+    nutrition = Nutrition()
+    nutrition.display_nutrition_calories(calories, user.goal)
+    Meals.get_meal_options()
+    meals_instance = Meals()
+    meals_instance.graph(user.weight, user.goal, calories.caloriechange)  
