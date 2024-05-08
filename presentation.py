@@ -42,17 +42,17 @@ class Calories:
                 if line.startswith(goal):
                     return next(file).strip()
 
-    def calculate_maintenance_calories(self):
-        guidelines = self._read_guidelines("maintenance")
+   
+    def calculate_calories(self):
+        if self.goal == "maintenance":
+            guidelines = self._read_guidelines("maintenance")
+        if self.goal == "shred":
+            guidelines = self._read_guidelines("shred")
+        if self.goal == "bulk":
+            guidelines = self._read_guidelines("bulk")
+            
         return self.calculate_custom_calories(guidelines)
-
-    def calculate_shred_calories(self):
-        guidelines = self._read_guidelines("shred")
-        return self.calculate_custom_calories(guidelines)
-
-    def calculate_bulk_calories(self):
-        guidelines = self._read_guidelines("bulk")
-        return self.calculate_custom_calories(guidelines)
+        
 
     def calculate_custom_calories(self, guidelines):
         #Matt: comprehensions
@@ -206,14 +206,14 @@ class Nutrition:
 #Elizabeth: f-strings, optional parameters, sequence unpacking
     def calculate_nutrition_plan(calories, goal):
         if goal == 'shred':
-            calories = calories.calculate_shred_calories()
+            calories = calories.calculate_calories()
             advice = "Focus on high protein intake and increase cardio."
         elif goal == 'bulk':
-            calories = calories.calculate_bulk_calories()
+            calories = calories.calculate_calories()
             advice = "Ensure you are getting enough carbs and protein for recovery."
         elif goal == 'maintenance':
             advice = "Maintain a balanced diet to keep your current body weight."
-            calories = calories.calculate_maintenance_calories()
+            calories = calories.calculate_calories()
         return calories, advice
     def display_nutrition_calories(calories, goal, detailed=True):
         calories, advice = Nutrition.calculate_nutrition_plan(calories, goal)

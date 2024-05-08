@@ -14,7 +14,74 @@ class User:
 
 class Calories: 
     #Matt's code. 
+    """
+    This class allows users to obtain personalized calorie plans based on their input and the guidelines provided in the text file. The calculation considers factors such as user's height, weight, sport intensity, and daily activity level to provide tailored calorie plans for maintenance, shredding, and bulking.
+    """
+    def __init__(self, guidelines_file, user_height, user_weight, user_age, user_sport, user_daily_activity, user_goal):
+        self.guidelines_file = guidelines_file
+        self.height = user_height
+        self.weight = user_weight
+        self.age = user_age  
+        self.sport = user_sport
+        self.daily_activity = user_daily_activity
+        self.goal = user_goal
     
+    def _read_guidelines(self, goal):
+        #Matt: with statement 
+        with open(self.guidelines_file, 'r', encoding='utf-8') as file:
+            for line in file:
+                if line.startswith(goal):
+                    return next(file).strip()
+
+   
+    def calculate_calories(self):
+        if self.goal == "maintenance":
+            guidelines = self._read_guidelines("maintenance")
+        if self.goal == "shred":
+            guidelines = self._read_guidelines("shred")
+        if self.goal == "bulk":
+            guidelines = self._read_guidelines("bulk")
+            
+        return self.calculate_custom_calories(guidelines)
+        
+
+    def calculate_custom_calories(self, guidelines):
+        #Matt: comprehensions
+        # Parse guidelines from the file
+        guideline_values = [float(val) for val in guidelines.split(',')[1:]]
+        maintenance_calories = (10 * self.weight) + (6.25 * self.height * 100) - (5 * self.age) + 5
+        shred_calories = maintenance_calories - 500
+        bulk_calories = maintenance_calories + 500
+
+        if self.sport.lower() == "high-intensity":
+            maintenance_calories *= 1.3
+            shred_calories *= 1.3
+            bulk_calories *= 1.3
+        elif self.sport.lower() == "moderate-intensity":
+            maintenance_calories *= 1.2
+            shred_calories *= 1.2
+            bulk_calories *= 1.2
+        elif self.sport.lower() == "low-intensity": 
+            maintenance_calories *= 1.1
+            shred_calories *= 1.1
+            bulk_calories *= 1.1
+        if self.daily_activity.lower() == "lightly active":
+            maintenance_calories *= 1.2
+            shred_calories *= 1.2
+            bulk_calories *= 1.2
+        elif self.daily_activity.lower() == "average":
+            maintenance_calories *= 1.3
+            shred_calories *= 1.3
+            bulk_calories *= 1.3
+        elif self.daily_activity.lower() == "very active":
+            maintenance_calories *= 1.4
+            shred_calories *= 1.4
+            bulk_calories *= 1.4
+        return {
+            "maintenance": maintenance_calories,
+            "shred": shred_calories,
+            "bulk": bulk_calories
+        }
     def bmi_calculation(self): 
         #Pragya: using grouby for pandas dataframes
         '''
@@ -151,14 +218,14 @@ class Nutrition:
     """ 
     def calculate_nutrition_plan(calories, goal):
         if goal == 'shred':
-            calories = calories.calculate_shred_calories()
+            calories = calories.calculate_calories()
             advice = "Focus on high protein intake and increase cardio."
         elif goal == 'bulk':
-            calories = calories.calculate_bulk_calories()
+            calories = calories.calculate_calories()
             advice = "Ensure you are getting enough carbs and protein for recovery."
         elif goal == 'maintenance':
             advice = "Maintain a balanced diet to keep your current body weight."
-            calories = calories.calculate_maintenance_calories()
+            calories = calories.calculate_calories()
         return calories, advice
     def display_nutrition_calories(calories, goal, detailed=True):
         calories, advice = Nutrition.calculate_nutrition_plan(calories, goal)
