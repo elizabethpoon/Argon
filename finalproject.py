@@ -265,4 +265,4 @@ if __name__ == "__main__":
     Nutrition.display_nutrition_calories(calories, user.goal, detailed=detailed_input)
     Meals.get_meal_options()
     meals_instance = Meals()
-    meals_instance.graph(user.weight, user.goal, 500)
+    meals_instance.graph(user.weight, user.goal, 200)
