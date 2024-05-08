@@ -80,8 +80,35 @@ class Meals:
         plt.show()
 
 class Nutrition: 
-    #Elizabeth's code. 
-    pass 
+    """
+    Calculates adjusted calorie intake and provides dietary advice based on the fitness goal.
+    
+    Parameters:
+        calories (CalorieCalculator): An object capable of calculating calorie needs.
+        goal (str): The fitness goal - 'shred', 'bulk', or 'maintenance'.
+    
+    Returns:
+        tuple: Adjusted calories and dietary advice as a tuple.
+    """ 
+    def calculate_nutrition_plan(calories, goal):
+        if goal == 'shred':
+            calories = calories.calculate_shred_calories()
+            advice = "Focus on high protein intake and increase cardio."
+        elif goal == 'bulk':
+            calories = calories.calculate_bulk_calories()
+            advice = "Ensure you are getting enough carbs and protein for recovery."
+        elif goal == 'maintenance':
+            advice = "Maintain a balanced diet to keep your current body weight."
+            calories = calories.calculate_maintenance_calories()
+        return calories, advice
+    def display_nutrition_calories(calories, goal, detailed=True):
+        calories, advice = Nutrition.calculate_nutrition_plan(calories, goal)
+        caloric_intake_info = f"Your daily caloric intake should be approximately {calories[user.goal]:.2f} calories."
+        if detailed:
+            print(f"For your goal to {user.goal}, {caloric_intake_info}")
+            print(advice)
+        else:
+            print(caloric_intake_info)
 
 # Calls:
 if __name__ == "__main__":
