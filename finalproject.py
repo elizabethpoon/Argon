@@ -89,6 +89,10 @@ class Calories:
 
         This method reads BMI data from a CSV file, calculates the user's BMI using their stored height and weight attributes, 
         retrieves the average BMI of their age group from the dataset, and compares the user's BMI with the average.
+        
+        Sources: 
+        - Centers for Disease Control and Prevention, https://www.cdc.gov/nccdphp/dnpao/growthcharts/training/bmiage/page5_1.html
+        The equation for calculating Body Mass Index in metric form was incorporated into this code with no modifications. 
         '''
         
         df = pd.read_csv("bmi.csv")
