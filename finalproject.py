@@ -178,8 +178,4 @@ if __name__ == "__main__":
     Nutrition.display_nutrition_calories(calories, user.goal) 
     Meals.get_meal_options()
     meals_instance = Meals()
-<<<<<<< HEAD
     meals_instance.graph(user.weight, user.goal, 500)
-=======
-    meals_instance.graph(user.weight, user.goal, calories.caloriechange)  
->>>>>>> c976785605ae542ac94e4900c8e2ee6fe0755823
