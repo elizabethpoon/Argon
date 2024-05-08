@@ -24,7 +24,7 @@ class User:
         self.daily_activity = input("Daily Activities (lightly active/average/very active): ")
         while self.daily_activity != ["lightly active", "average", "very average"]:
             print("There's an error. Please input these correct terms.")
-           input("Daily Activities (lightly active/average/very active): ")
+            input("Daily Activities (lightly active/average/very active): ")
         
         self.goal = input("Goal (shred/bulk/maintenance): ")
         while self.goal != ["shared", "bulk", "maintenance"]:
