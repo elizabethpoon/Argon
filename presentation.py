@@ -17,11 +17,19 @@ class User:
         self.weight = float(input("Weight (in kg): "))
         self.age = int(input("Age: "))
         self.sport = input("Sport (high-intensity/moderate-intensity/low-intensity): ")
-        if self.sport != self.sport:
+        while self.sport != ["high-intensity", "moderate-intensity", "low-intensity"]:
             print("There's an error. Please input these correct terms.")
-        
+            input("Sport (high-intensity/moderate-intensity/low-intensity): ")
+            
         self.daily_activity = input("Daily Activities (lightly active/average/very active): ")
+        while self.daily_activity != ["lightly active", "average", "very average"]:
+            print("There's an error. Please input these correct terms.")
+           input("Daily Activities (lightly active/average/very active): ")
+        
         self.goal = input("Goal (shred/bulk/maintenance): ")
+        while self.goal != ["shared", "bulk", "maintenance"]:
+            print("There's an error. Please input these correct terms.")
+            input("Goal (shred/bulk/maintenance): ")
 
         print(f"This is {self.name}. Their height is {self.height}. Their weight is {self.weight}. Their age is {self.age}. The sport they play is {self.sport}. Their daily activities include {self.daily_activity}. Their goal is to {self.goal}.")
 
