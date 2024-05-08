@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 plt.style.use('fivethirtyeight')
 
 class User:
-    #Michael: f-strings and input() function
+    #Michael: f-string, input() function, and conditional expressions
     
     def get_user_info(self):
         self.name = input("Name: ")
@@ -17,6 +17,9 @@ class User:
         self.weight = float(input("Weight (in kg): "))
         self.age = int(input("Age: "))
         self.sport = input("Sport (high-intensity/moderate-intensity/low-intensity): ")
+        if self.sport != sport:
+            print("There's an error. Please input these correct terms.")
+        
         self.daily_activity = input("Daily Activities (lightly active/average/very active): ")
         self.goal = input("Goal (shred/bulk/maintenance): ")
 
@@ -223,17 +226,6 @@ class Nutrition:
             print(advice)
         else:
             print(caloric_intake_info)
-
-def parse_args():
-    parser = argsparse.ArgumentParser(description = ' ')
-
-    parser.add_argument('--option', type = int, help = 'An integer option')
-    parser.add_argument('filename', type = str, help = 'The filename to process')
-
-    args = parser.parse_args()
-
-print('Filename: ', args.filename)
-print('Option: ', args.option)
 
 # Calls:
 if __name__ == "__main__":
