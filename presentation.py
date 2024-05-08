@@ -17,7 +17,7 @@ class User:
         self.weight = float(input("Weight (in kg): "))
         self.age = int(input("Age: "))
         self.sport = input("Sport (high-intensity/moderate-intensity/low-intensity): ")
-        if self.sport != sport:
+        if self.sport != self.sport:
             print("There's an error. Please input these correct terms.")
         
         self.daily_activity = input("Daily Activities (lightly active/average/very active): ")
