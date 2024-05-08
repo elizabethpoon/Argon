@@ -16,10 +16,13 @@ class User:
         self.height = float(input("Height (in meters): "))
         self.weight = float(input("Weight (in kg): "))
         self.age = int(input("Age: "))
-        self.sport = input("Sport (high-intensity/moderate-intensity/low-intensity): ")
-        while self.sport != ["high-intensity", "moderate-intensity", "low-intensity"]:
-            print("There's an error. Please input these correct terms.")
-            input("Sport (high-intensity/moderate-intensity/low-intensity): ")
+        while True:
+            self.sport = input("Sport (high-intensity/moderate-intensity/low-intensity): ")
+            if self.sport == "high-intensity" or self.sport == "moderate-intensity" or self.sport == "low-intensity":
+                break
+            else:
+                print("There's an error. Please input these correct terms.")
+            
             
         self.daily_activity = input("Daily Activities (lightly active/average/very active): ")
         while self.daily_activity != ["lightly active", "average", "very average"]:
