@@ -224,6 +224,17 @@ class Nutrition:
         else:
             print(caloric_intake_info)
 
+def parse_args():
+    parser = argsparse.ArgumentParser(description = ' ')
+
+    parser.add_argument('--option', type = int, help = 'An integer option')
+    parser.add_argument('filename', type = str, help = 'The filename to process')
+
+    args = parser.parse_args()
+
+print('Filename: ', args.filename)
+print('Option: ', args.option)
+
 # Calls:
 if __name__ == "__main__":
     user = User()
