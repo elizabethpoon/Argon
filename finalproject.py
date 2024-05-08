@@ -50,8 +50,8 @@ class Calories:
         # Parse guidelines from the file
         guideline_values = [float(val) for val in guidelines.split(',')[1:]]
         maintenance_calories = (10 * self.weight) + (6.25 * self.height * 100) - (5 * self.age) + 5
-        shred_calories = maintenance_calories - 500
-        bulk_calories = maintenance_calories + 500
+        shred_calories = maintenance_calories - 200
+        bulk_calories = maintenance_calories + 200
 
         if self.sport.lower() == "high-intensity":
             maintenance_calories *= 1.3
