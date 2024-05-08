@@ -207,16 +207,24 @@ class Meals:
 
 class Nutrition: 
     """
-    Calculates adjusted calorie intake and provides dietary advice based on the fitness goal.
-    
-    Parameters:
+    A class to calculate adjusted calorie intake and provide dietary advice based on the fitness goal.
+
+    Attributes:
         calories (CalorieCalculator): An object capable of calculating calorie needs.
         goal (str): The fitness goal - 'shred', 'bulk', or 'maintenance'.
-    
-    Returns:
-        tuple: Adjusted calories and dietary advice as a tuple.
-    """ 
+    """
     def calculate_nutrition_plan(calories, goal):
+        """
+        Calculates the recommended daily caloric intake and provides specific dietary advice
+        according to the specified fitness goal.
+
+        Parameters:
+            calories (CalorieCalculator): An object capable of calculating calorie needs.
+            goal (str): The desired fitness goal - options are 'shred', 'bulk', or 'maintenance'.
+
+        Returns:
+            tuple: A tuple containing the adjusted calories (float) and dietary advice (str).
+        """
         if goal == 'shred':
             calories = calories.calculate_calories()
             advice = "Focus on high protein intake and increase cardio."
@@ -228,6 +236,17 @@ class Nutrition:
             calories = calories.calculate_calories()
         return calories, advice
     def display_nutrition_calories(calories, goal, detailed=True):
+        """
+        Displays the calculated caloric intake and, if requested, detailed dietary advice.
+
+        Parameters:
+            calories (CalorieCalculator): An object capable of calculating calorie needs.
+            goal (str): The desired fitness goal.
+            detailed (bool): If True, prints both caloric intake and dietary advice; if False, prints only caloric intake.
+
+        Returns:
+            None: This method prints the caloric intake and dietary advice directly and does not return any value.
+        """
         calories, advice = Nutrition.calculate_nutrition_plan(calories, goal)
         caloric_intake_info = f"Your daily caloric intake should be approximately {calories[user.goal]:.2f} calories."
         if detailed:
