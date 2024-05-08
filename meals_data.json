@@ -1,7 +1,13 @@
 {
-    "Meal 1": ["chicken", "rice", "broccoli"],
-    "Meal 2": ["beef", "potatoes", "carrots"],
-    "Meal 3": ["salmon", "quinoa", "asparagus"],
-    "Meal 4": ["pasta", "tomatoes", "spinach"],
-    "Meal 5": ["tofu", "brown rice", "green beans"]
+    "Barbeque Chicken": ["chicken", "rice", "barbeque sauce"],
+    "Mac and Cheese": ["cheese", "pasta", "milk"],
+    "Chili-Glazed Salmon": ["salmon", "chili sauce", "scallion"],
+    "Grilled Steak": ["steak", "olive oil", "pepper"],
+    "Chili": ["beans", "tomato", "beef"],
+    "Rollups": ["ham", "cheese", "dough"],
+    "Salsa Chicken": ["chicken", "salsa", "avocado"],
+    "Bruschetta": ["toast", "tomato", "cheese"],
+    "Pulled Pork": ["pork", "root beer", "barbeque sauce"],
+    "Cauliflower Soup": ["olive oil", "cauliflower", "onion"],
+    "Bok Choy Shrimp": ["shrimp", "bok choy", "garlic"]
   }  
