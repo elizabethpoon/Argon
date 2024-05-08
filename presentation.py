@@ -233,7 +233,9 @@ if __name__ == "__main__":
     user.get_user_info()
     calories = Calories("guidelines.txt", user.height, user.weight, user.age, user.sport, user.daily_activity, user.goal)
     Calories.bmi_calculation(self=user)
-    Nutrition.display_nutrition_calories(calories, user.goal) 
+    detailed_input = input("Do you want detailed dietary advice? (yes/no): ").strip().lower() == 'yes'
+    Nutrition.display_nutrition_calories(calories, user.goal, detailed=detailed_input)
+    #Nutrition.display_nutrition_calories(calories, user.goal) 
     Meals.get_meal_options()
     meals_instance = Meals()
     meals_instance.graph(user.weight, user.goal, 500)
