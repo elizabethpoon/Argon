@@ -36,7 +36,66 @@ class Calories:
             print(f"The user's calculated BMI is {calculated_bmi}. The user's BMI is greater than the average BMI of their age group.")
     
 class Meals: 
-    #Colby's code. 
+    def get_meals_data():
+    #Colby: use of json.dumps(), json.loads(), json.dump(), or json.load() 
+        """
+        Gets meals data from JSON file.
+
+        Returns:
+            dict: A dictionary containing meal number as
+            keys and ingredients as values.
+        """
+        with open('meals_data.json', 'r', encoding='utf-8') as meals_list:
+            meals_data = json.load(meals_list)
+        return meals_data
+    def get_meal_options(user_allergies=None, user_preferences=None):
+    #Colby: use of a key function (which can be a lambda expression) with one
+    #of the following commands: list.sort(), sorted(), min(), or max()
+        """
+        Gives meal options based on user's allergies and preferences
+
+        Args:
+            user_allergies (list, optional): A list of user's allergies.
+            Defaults to None
+            user_preferences (list, optional): A list of user's meal preferences.
+            Defaults to None
+
+        Returns:
+            list or None: A list of tuples that have meal options 
+            (meal name and ingredients), or None if no meal options are found
+        """
+        with open('meals_data.json', 'r', encoding='utf-8') as meals_list:
+            meals_data = json.load(meals_list)
+        if user_allergies is None:
+            user_allergies = input("Enter your allergies (comma-separated): ").strip().split(', ')
+        if user_preferences is None:
+            user_preferences = input("Enter your meal preferences (comma-separated): ").strip().split(', ')
+
+        meals_data = Meals.get_meals_data()
+
+        possible_meals = []
+        for meal, ingredients in meals_data.items():
+            allergies_present = any(allergy in ingredients for allergy in user_allergies)
+            if allergies_present:
+                continue
+            match_count = sum(1 for preference in user_preferences if preference in ingredients)
+            possible_meals.append((meal, ingredients, match_count))
+
+        if len(possible_meals) == 0:
+            return None
+
+        sorted_meals = sorted(possible_meals, key=lambda x: (x[2], x[0]), reverse=True)
+        num_meals_to_select = min(3, len(sorted_meals))
+        meal_options = random.sample(sorted_meals[:num_meals_to_select], num_meals_to_select)
+
+        if meal_options:
+            print("Here are your meal options for today:")
+            for meal_index in range(len(meal_options)):
+                meal, ingredients, _ = meal_options[meal_index]
+                print(f"{meal}: {', '.join(ingredients)}")
+        else:
+            print("Sorry, we couldn't find suitable meal options for your allergies and preferences.")
+        return meal_options
     
     def graph(self, current_weight, goal, calories):
         #Pragya: visualization using pyplot
