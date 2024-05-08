@@ -22,18 +22,21 @@ class User:
                 break
             else:
                 print("There's an error. Please input these correct terms.")
-            
-            
-        self.daily_activity = input("Daily Activities (lightly active/average/very active): ")
-        while self.daily_activity != ["lightly active", "average", "very average"]:
-            print("There's an error. Please input these correct terms.")
-            input("Daily Activities (lightly active/average/very active): ")
-        
-        self.goal = input("Goal (shred/bulk/maintenance): ")
-        while self.goal != ["shared", "bulk", "maintenance"]:
-            print("There's an error. Please input these correct terms.")
-            input("Goal (shred/bulk/maintenance): ")
-
+                
+        while True:
+            self.daily_activity = input("Daily Activities (lightly active/average/very active): ")
+            if self.daily_activity == "lightly-active" or self.daily_activity == "average" or self.daily_activity == "very-active":
+                break
+            else:
+                print("There's an error. Please input these correct terms.")
+                
+        while True:
+            self.goal = input("Goal (shred/bulk/maintenance): ")
+            if self.goal == "shred" or self.goal == "bulk" or self.goal == "maintenance":
+                break
+            else:
+                print("There's an error. Please input these correct terms.")
+                
         print(f"This is {self.name}. Their height is {self.height}. Their weight is {self.weight}. Their age is {self.age}. The sport they play is {self.sport}. Their daily activities include {self.daily_activity}. Their goal is to {self.goal}.")
 
 class Calories:
