@@ -161,7 +161,7 @@ class Meals:
                 meal, ingredients, _ = meal_options[meal_index]
                 print(f"{meal}: {', '.join(ingredients)}")
         else:
-            print("Sorry, we couldn't find suitable meal options for your allergies and preferences.")
+            print("Sorry, we couldn't find suitable meal options for your allergies.")
         return meal_options
     
     def graph(self, current_weight, goal, calories):
