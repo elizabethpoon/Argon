@@ -34,27 +34,28 @@ class User:
         self.height = float(input("Height (in meters): "))
         self.weight = float(input("Weight (in kg): "))
         self.age = int(input("Age: "))
-        while True:
-            self.sport = input("Sport (high-intensity/moderate-intensity/low-intensity): ")
-            if self.sport == "high-intensity" or self.sport == "moderate-intensity" or self.sport == "low-intensity":
-                break
-            else:
-                print("There's an error. Please input the correct answer.")
-                
-        while True:
-            self.daily_activity = input("Daily Activities (lightly active/average/very active): ")
-            if self.daily_activity == "lightly active" or self.daily_activity == "average" or self.daily_activity == "very active":
-                break
-            else:
-                print("There's an error. Please input the correct answer.")
-                
-        while True:
-            self.goal = input("Goal (shred/bulk/maintenance): ")
-            if self.goal == "shred" or self.goal == "bulk" or self.goal == "maintenance":
-                break
-            else:
-                print("There's an error. Please input the correct answer.")
-                
+        
+        # Sport
+        sport = input("Sport (high-intensity/moderate-intensity/low-intensity): ")
+        self.sport = sport if sport in ["high-intensity", "moderate-intensity", "low-intensity"] else "invalid input"
+        
+        if self.sport == "invalid input": 
+            exit()
+            
+        # Daily Activities
+        daily_activity = input("Daily Activities (lightly active/average/very active): ")
+        self.daily_activity = daily_activity if daily_activity in ["lightly active", "average", "very active"] else "invalid input"
+
+        if self.daily_activity == "invalid input": 
+            exit()
+            
+        # Goal
+        intent = input("Goal (shred/bulk/maintenance): ")
+        self.goal = intent if intent in ["shred", "bulk", "maintenance"] else "invalid input"
+        
+        if self.goal == "invalid input": 
+            exit()
+        
         print(f"This is {self.name}. Their height is {self.height}. Their weight is {self.weight}. Their age is {self.age}. The sport they play is {self.sport}. Their daily activities include {self.daily_activity}. Their goal is to {self.goal}.")
 
 class Calories: 
