@@ -1,4 +1,5 @@
 import pandas as pd
+import sys
 import random
 import json
 import numpy as np
@@ -18,17 +19,26 @@ class User:
         self.age = int(input("Age: "))
         
         # Sport
-        self.sport = input("Sport (high-intensity/moderate-intensity/low-intensity): ")
-        self.sport = self.sport if self.sport in ["high-intensity", "moderate-intensity", "low-intensity"] else "invalid input"
-
+        sport = input("Sport (high-intensity/moderate-intensity/low-intensity): ")
+        self.sport = sport if sport in ["high-intensity", "moderate-intensity", "low-intensity"] else "invalid input"
+        
+        if self.sport == "invalid input": 
+            exit()
+            
         # Daily Activities
-        self.daily_activity = input("Daily Activities (lightly active/average/very active): ")
-        self.daily_activity = self.daily_activity if self.daily_activity in ["lightly active", "average", "very active"] else "invalid input"
+        daily_activity = input("Daily Activities (lightly active/average/very active): ")
+        self.daily_activity = daily_activity if daily_activity in ["lightly active", "average", "very active"] else "invalid input"
 
+        if self.daily_activity == "invalid input": 
+            exit()
+            
         # Goal
-        self.goal = input("Goal (shred/bulk/maintenance): ")
-        self.goal = self.goal if self.goal in ["shred", "bulk", "maintenance"] else "invalid input"
-                
+        intent = input("Goal (shred/bulk/maintenance): ")
+        self.goal = intent if intent in ["shred", "bulk", "maintenance"] else "invalid input"
+        
+        if self.goal == "invalid input": 
+            exit()
+        
         print(f"This is {self.name}. Their height is {self.height}. Their weight is {self.weight}. Their age is {self.age}. The sport they play is {self.sport}. Their daily activities include {self.daily_activity}. Their goal is to {self.goal}.")
 
 class Calories:
