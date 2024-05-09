@@ -23,21 +23,21 @@ class User:
         self.age = int(input("Age: "))
         while True:
             self.sport = input("Sport (high-intensity/moderate-intensity/low-intensity): ")
-            if self.sport == "high-intensity" or self.sport == "moderate-intensity" or self.sport == "low-intensity":
+            if self.sport in "high-intensity" or self.sport in "moderate-intensity" or self.sport in "low-intensity":
                 break
             else:
                 print("There's an error. Please input these correct terms.")
                 
         while True:
             self.daily_activity = input("Daily Activities (lightly active/average/very active): ")
-            if self.daily_activity == "lightly-active" or self.daily_activity == "average" or self.daily_activity == "very-active":
+            if self.daily_activity in "lightly-active" or self.daily_activity in "average" or self.daily_activity in "very-active":
                 break
             else:
                 print("There's an error. Please input these correct terms.")
                 
         while True:
             self.goal = input("Goal (shred/bulk/maintenance): ")
-            if self.goal == "shred" or self.goal == "bulk" or self.goal == "maintenance":
+            if self.goal in "shred" or self.goal in "bulk" or self.goal in "maintenance":
                 break
             else:
                 print("There's an error. Please input these correct terms.")
