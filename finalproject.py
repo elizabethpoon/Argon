@@ -49,7 +49,7 @@ class Calories:
     """
     Given user information this class calculates calories based on their desired goal. 
     Takes in height, weight, age, sport, daily activity and goal and spits out a personalized target number for them.
-    Source used for calorie calculator: https://www.calories.info/calorie-intake-calculator
+    Source used for calorie calculator: https://www.calculator.net/calorie-calculator.html
     
     Attributes:
         guidelines_file (txt file): the txt file to shred, maintenance or bulk.
