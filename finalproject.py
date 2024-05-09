@@ -14,6 +14,19 @@ class User:
 
     """
     Asks the user to input their name, height, weight, age, sport, daily activity, and goal
+
+    Attributes:
+       name (str) = The user's name
+       height (int) = The user's height
+       weight (int) = The user's weight
+       age (int) = The user's age
+       sport (str) = The user's sport intensity
+       daily_activity (str) = The user's active activity
+       goal (str) = The user's prefered goal
+
+    Raises:
+        ValueErrors: If the input datatype is wrong
+        
     """
     
     def get_user_info(self):
