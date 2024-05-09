@@ -184,6 +184,7 @@ class Calories:
 class Meals: 
     def get_meals_data():
     #Colby: use of json.dumps(), json.loads(), json.dump(), or json.load() 
+    #Source used for meals: https://www.buzzfeed.com/lindsayhunt/easy-3-ingredient-dinners-that-are-actually-delicious 
         """
         Gets meals data from JSON file.
 
