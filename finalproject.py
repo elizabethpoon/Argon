@@ -30,7 +30,7 @@ class User:
                 
         while True:
             self.daily_activity = input("Daily Activities (lightly active/average/very active): ")
-            if self.daily_activity in "lightly-active" or self.daily_activity in "average" or self.daily_activity in "very-active":
+            if self.daily_activity in "lightly active" or self.daily_activity in "average" or self.daily_activity in "very active":
                 break
             else:
                 print("There's an error. Please input these correct terms.")
