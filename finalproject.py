@@ -45,9 +45,20 @@ class User:
         print(f"This is {self.name}. Their height is {self.height}. Their weight is {self.weight}. Their age is {self.age}. The sport they play is {self.sport}. Their daily activities include {self.daily_activity}. Their goal is to {self.goal}.")
 
 class Calories: 
-    #Matt's code. 
+    #Matt
     """
-    This class allows users to obtain personalized calorie plans based on their input and the guidelines provided in the text file. The calculation considers factors such as user's height, weight, sport intensity, and daily activity level to provide tailored calorie plans for maintenance, shredding, and bulking.
+    Given user information this class calculates calories based on their desired goal. 
+    Takes in height, weight, age, sport, daily activity and goal and spits out a personalized target number for them.
+    Source used for calorie calculator: https://www.calories.info/calorie-intake-calculator
+    
+    Attributes:
+        guidelines_file (txt file): the txt file to shred, maintenance or bulk.
+        height (str): the user's height.
+        weight (str): the user's weight.
+        age (str): the user's age.
+        sport (str): the user's sport intensity.
+        daily_activity (str): the user's activilty level on a daily basis.
+        goal (str): the user's goal.
     """
     def __init__(self, guidelines_file, user_height, user_weight, user_age, user_sport, user_daily_activity, user_goal):
         self.guidelines_file = guidelines_file
@@ -59,7 +70,12 @@ class Calories:
         self.goal = user_goal
     
     def _read_guidelines(self, goal):
-        #Matt: with statement 
+        """Reads the guideline text file
+        
+        Args:
+            goal (str): either shred, maintenance, or bulk
+        """
+        #Matt: with statement opening up the txt file
         with open(self.guidelines_file, 'r', encoding='utf-8') as file:
             for line in file:
                 if line.startswith(goal):
@@ -67,6 +83,11 @@ class Calories:
 
    
     def calculate_calories(self):
+        """Function used to determine which calories to calulate based on the user's goal.
+        
+        Returns:
+            Number of calories personalized for the user
+        """
         if self.goal == "maintenance":
             guidelines = self._read_guidelines("maintenance")
         if self.goal == "shred":
@@ -78,12 +99,20 @@ class Calories:
         
 
     def calculate_custom_calories(self, guidelines):
-        #Matt: comprehensions
+        """This function gets called by calculate_calories that does the math
+        behind the printed out number of calories.
+        
+        Args:
+            guidelines (str): scans the txt file for shred, maintenance, or bulk.
+            That information is used to calculate calories.
+            
+        """
+        #Matt: using comprehensions 
         # Parse guidelines from the file
         guideline_values = [float(val) for val in guidelines.split(',')[1:]]
-        maintenance_calories = (10 * self.weight) + (6.25 * self.height * 100) - (5 * self.age) + 5
-        shred_calories = maintenance_calories - 200
-        bulk_calories = maintenance_calories + 200
+        maintenance_calories = (9.56 * self.weight) + (6.25 * self.height * 100) - (5 * self.age) + 5
+        shred_calories = maintenance_calories - 400
+        bulk_calories = maintenance_calories + 500
 
         if self.sport.lower() == "high-intensity":
             maintenance_calories *= 1.3
@@ -114,6 +143,7 @@ class Calories:
             "shred": shred_calories,
             "bulk": bulk_calories
         }
+        
     def bmi_calculation(self): 
         #Pragya: using grouby for pandas dataframes
         '''
